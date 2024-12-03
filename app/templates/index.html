@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hash MD5 Verificador y Descifrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hash MD5 Verificador y Descifrador</h1>
+    <p>Ingresa un hash MD5 para verificarlo y, si es válido, intentar descifrarlo:</p>
+    <input type="text" id="hashInput" placeholder="Ingresa el hash MD5 aquí">
+    <button onclick="processHash()">Procesar</button>
+    <div class="result" id="result"></div>
+
+    <script>
+        async function processHash() {
+            const hash = document.getElementById('hashInput').value;
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.textContent = "Procesando...";
+            
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ hash })
+            });
+            
+            const data = await response.json();
+            resultDiv.textContent = data.message;
+        }
+    </script>
+</body>
+</html>
